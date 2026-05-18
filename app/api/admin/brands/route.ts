@@ -1,0 +1,54 @@
+import { NextResponse, NextRequest } from "next/server"
+import { getSupabaseAdminClient } from "@/lib/supabase/server"
+import { getBrands } from "@/lib/data"
+import { isAdminAuthorized } from "@/lib/admin-auth"
+
+export async function GET() {
+  try {
+    const brands = await getBrands()
+    return NextResponse.json({ success: true, data: brands })
+  } catch (error) {
+    console.error("Error fetching brands:", error)
+    return NextResponse.json({ success: false, data: [], error: "Internal server error" }, { status: 500 })
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const adminSupabase = await getSupabaseAdminClient()
+
+    if (!(await isAdminAuthorized(request))) {
+      return NextResponse.json({ success: false, error: "Forbidden" }, { status: 403 })
+    }
+
+    const body = await request.json()
+    const { name, slug, description, logo, featured } = body
+
+    if (!name || !slug) {
+      return NextResponse.json({ success: false, error: "Name and slug are required" }, { status: 400 })
+    }
+
+    // Insert brand
+    const { data: brand, error } = await adminSupabase
+      .from("brands")
+      .insert({
+        name,
+        slug,
+        description: description || null,
+        logo: logo || null,
+        featured: featured || false,
+      })
+      .select()
+      .single()
+
+    if (error) {
+      console.error("Error creating brand:", error)
+      return NextResponse.json({ success: false, error: error.message }, { status: 400 })
+    }
+
+    return NextResponse.json({ success: true, data: brand })
+  } catch (error) {
+    console.error("Error in POST /api/admin/brands:", error)
+    return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 })
+  }
+}
