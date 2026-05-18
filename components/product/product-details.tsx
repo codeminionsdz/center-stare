@@ -191,39 +191,69 @@ export function ProductDetails({ product }: ProductDetailsProps) {
 
         <p className="text-muted-foreground leading-relaxed">{product.shortDescription}</p>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center border border-border rounded-lg w-fit">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="p-3 hover:bg-muted transition-colors"
-              disabled={!isInStock}
-            >
-              <Minus className="h-4 w-4" />
-            </button>
-            <span className="w-12 text-center font-medium">{quantity}</span>
-            <button
-              onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-              className="p-3 hover:bg-muted transition-colors"
-              disabled={!isInStock || quantity >= product.stock}
-            >
-              <Plus className="h-4 w-4" />
-            </button>
-          </div>
+        <div className="rounded-3xl border border-border bg-card p-4 sm:p-5 shadow-[0_14px_35px_rgba(0,0,0,0.06)] ring-1 ring-border/60">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Quantity</p>
+                <p className="text-xs text-muted-foreground">Select how many pieces you want</p>
+              </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button size="lg" variant="outline" className="flex-1" onClick={handleAddToCart} disabled={!isInStock}>
-              <ShoppingCart className="mr-2 h-5 w-5" />
-              Add to Cart
-            </Button>
-            <Button
-              size="lg"
-              className="flex-1 bg-gold-600 hover:bg-gold-700 text-black font-semibold"
-              onClick={handleBuyNow}
-              disabled={!isInStock}
-            >
-              <Zap className="mr-2 h-5 w-5" />
-              Buy Now
-            </Button>
+              <div className="flex items-center overflow-hidden rounded-full border-2 border-border bg-background">
+                <button
+                  type="button"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="grid h-12 w-12 place-items-center transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={!isInStock}
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="h-4 w-4" />
+                </button>
+
+                <span className="min-w-12 px-3 text-center text-base font-bold">{quantity}</span>
+
+                <button
+                  type="button"
+                  onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                  className="grid h-12 w-12 place-items-center transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={!isInStock || quantity >= product.stock}
+                  aria-label="Increase quantity"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Button
+                type="button"
+                size="lg"
+                variant="outline"
+                className="h-14 w-full rounded-2xl border-2 border-border bg-background px-5 text-base font-semibold text-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:bg-muted"
+                onClick={handleAddToCart}
+                disabled={!isInStock}
+              >
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                Add to Cart
+              </Button>
+
+              <Button
+                type="button"
+                size="lg"
+                className="h-14 w-full rounded-2xl border border-gold-600 bg-gold-600 px-5 text-base font-bold text-black shadow-lg shadow-gold-600/20 transition-all hover:-translate-y-0.5 hover:bg-gold-700 hover:shadow-xl hover:shadow-gold-600/25"
+                onClick={handleBuyNow}
+                disabled={!isInStock}
+              >
+                <Zap className="mr-2 h-5 w-5" />
+                Buy Now
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 rounded-2xl bg-muted/40 p-3 text-center">
+              <div className="text-xs font-medium text-muted-foreground">Fast checkout</div>
+              <div className="text-xs font-medium text-muted-foreground">Secure payment</div>
+              <div className="text-xs font-medium text-muted-foreground">Easy returns</div>
+            </div>
           </div>
         </div>
 

@@ -5,15 +5,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const {
-      firstName,
-      lastName,
+      fullName,
       phone,
       guestEmail,
-      address,
-      municipality,
-      city,
       wilaya,
-      postalCode,
       items,
       subtotal,
       shipping,
@@ -23,17 +18,15 @@ export async function POST(request: NextRequest) {
       promoCode,
     } = body
 
-    console.log("Order creation request:", { firstName, lastName, phone, guestEmail, address, municipality, city, wilaya, subtotal })
+    console.log("Order creation request:", { fullName, phone, guestEmail, wilaya, subtotal })
 
     // Validate required fields
-    if (!firstName || !lastName || !phone || !address || !wilaya || subtotal === undefined) {
-      console.error("Missing required fields:", { firstName, lastName, phone, address, wilaya, subtotal })
+    if (!fullName || !phone || !wilaya || subtotal === undefined) {
+      console.error("Missing required fields:", { fullName, phone, wilaya, subtotal })
       return NextResponse.json(
         { error: `Missing required fields: ${[
-          !firstName && "firstName",
-          !lastName && "lastName",
+          !fullName && "fullName",
           !phone && "phone",
-          !address && "address",
           !wilaya && "wilaya",
           subtotal === undefined && "subtotal"
         ].filter(Boolean).join(", ")}` },
@@ -47,28 +40,23 @@ export async function POST(request: NextRequest) {
     const { data: order, error: orderError } = await supabase
       .from("orders")
       .insert([
-        {
-          user_id: null, // For anonymous users
-          guest_email: guestEmail,
-          guest_phone: phone,
-          status: "pending",
-          subtotal: Math.round(subtotal),
-          shipping: Math.round(shipping),
-          discount: Math.round(discount),
-          total: Math.round(total),
-          payment_method: paymentMethod,
-          shipping_address: {
-            firstName,
-            lastName,
-            phone,
-            address,
-            municipality,
-            city,
-            wilaya,
-            postalCode,
-            promoCode: promoCode || null,
+          {
+            user_id: null, // For anonymous users
+            guest_email: guestEmail,
+            guest_phone: phone,
+            status: "pending",
+            subtotal: Math.round(subtotal),
+            shipping: Math.round(shipping),
+            discount: Math.round(discount),
+            total: Math.round(total),
+            payment_method: paymentMethod,
+            shipping_address: {
+              fullName,
+              phone,
+              wilaya,
+              promoCode: promoCode || null,
+            },
           },
-        },
       ])
       .select()
 

@@ -112,14 +112,9 @@ export default function CheckoutPage() {
       const formData = new FormData(e.currentTarget)
       
       const orderData = {
-        firstName: formData.get("firstName"),
-        lastName: formData.get("lastName"),
+        fullName: formData.get("fullName"),
         phone: formData.get("phone"),
-        address: formData.get("address"),
-        municipality: formData.get("municipality"),
-        city: formData.get("city"),
         wilaya: selectedWilaya,
-        postalCode: formData.get("postalCode"),
         guestEmail: formData.get("guestEmail"),
         items,
         subtotal,
@@ -210,15 +205,19 @@ export default function CheckoutPage() {
 
               {/* Contact Information */}
               <section className="bg-card border border-border rounded-lg p-6">
-                <h2 className="text-lg font-semibold mb-4">{t("checkout.contact_info")}</h2>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <Truck className="h-5 w-5 text-primary" />
+                  <h2 className="text-lg font-semibold">{t("checkout.contact_info")}</h2>
+                </div>
+                <div className="grid gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName">{t("checkout.first_name")}</Label>
-                    <Input id="firstName" name="firstName" required placeholder={language === "ar" ? "أدخل اسمك الأول" : language === "fr" ? "Entrez votre prénom" : "Enter your first name"} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName">{t("checkout.last_name")}</Label>
-                    <Input id="lastName" name="lastName" required placeholder={language === "ar" ? "أدخل اسم عائلتك" : language === "fr" ? "Entrez votre nom de famille" : "Enter your last name"} />
+                    <Label htmlFor="fullName">Full Name *</Label>
+                    <Input
+                      id="fullName"
+                      name="fullName"
+                      required
+                      placeholder={language === "ar" ? "أدخل الاسم الكامل" : language === "fr" ? "Entrez votre nom complet" : "Enter your full name"}
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">{t("checkout.phone")}</Label>
@@ -227,7 +226,7 @@ export default function CheckoutPage() {
                 </div>
               </section>
 
-              {/* Shipping Address */}
+              {/* Shipping Area */}
               <section className="bg-card border border-border rounded-lg p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Truck className="h-5 w-5 text-primary" />
@@ -235,37 +234,19 @@ export default function CheckoutPage() {
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="address">{t("checkout.street_address")}</Label>
-                    <Input id="address" name="address" required placeholder={language === "ar" ? "أدخل عنوان شارعك" : language === "fr" ? "Entrez votre adresse postale" : "Enter your street address"} />
-                  </div>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="wilaya">{t("checkout.wilaya")}</Label>
-                      <Select value={selectedWilaya} onValueChange={setSelectedWilaya} required>
-                        <SelectTrigger>
-                          <SelectValue placeholder={language === "ar" ? "اختر الولاية" : language === "fr" ? "Sélectionner la wilaya" : "Select wilaya"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {wilayas.map((wilaya) => (
-                            <SelectItem key={wilaya.id} value={wilaya.id}>
-                              {wilaya.code} - {wilaya.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="municipality">{t("checkout.municipality")}</Label>
-                      <Input id="municipality" name="municipality" required placeholder={language === "ar" ? "أدخل البلدية الخاصة بك" : language === "fr" ? "Entrez votre municipalité" : "Enter your municipality"} />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="city">{t("checkout.city")}</Label>
-                    <Input id="city" name="city" required placeholder={language === "ar" ? "أدخل مدينتك" : language === "fr" ? "Entrez votre ville" : "Enter your city"} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="postalCode">{t("checkout.postal_code")}</Label>
-                    <Input id="postalCode" name="postalCode" placeholder="e.g., 16000" />
+                    <Label htmlFor="wilaya">{t("checkout.wilaya")}</Label>
+                    <Select value={selectedWilaya} onValueChange={setSelectedWilaya} required>
+                      <SelectTrigger>
+                        <SelectValue placeholder={language === "ar" ? "اختر الولاية" : language === "fr" ? "Sélectionner la wilaya" : "Select wilaya"} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {wilayas.map((wilaya) => (
+                          <SelectItem key={wilaya.id} value={wilaya.id}>
+                            {wilaya.code} - {wilaya.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   {selectedWilayaData && (
                     <p className="text-sm text-muted-foreground">
@@ -423,4 +404,3 @@ export default function CheckoutPage() {
     </>
   )
 }
-

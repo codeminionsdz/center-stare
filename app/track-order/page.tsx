@@ -264,26 +264,15 @@ function TrackOrderContent() {
                   </div>
                   <div className='space-y-2 text-sm'>
                     <p>
-                      <strong>الاسم:</strong> {order.shipping_address.firstName} {order.shipping_address.lastName}
+                      <strong>الاسم:</strong>{" "}
+                      {order.shipping_address.fullName || `${order.shipping_address.firstName || ""} ${order.shipping_address.lastName || ""}`.trim()}
                     </p>
                     <p>
                       <strong>الهاتف:</strong> {order.shipping_address.phone}
                     </p>
-                    <p>
-                      <strong>العنوان:</strong> {order.shipping_address.address}
-                    </p>
-                    <p>
-                      <strong>الولاية:</strong> {getWilayaName(order.shipping_address.wilaya)}
-                    </p>
-                    <p>
-                      <strong>البلدية:</strong> {order.shipping_address.municipality}
-                    </p>
-                    <p>
-                      <strong>المدينة:</strong> {order.shipping_address.city}
-                    </p>
-                    {order.shipping_address.postalCode && (
+                    {order.shipping_address.wilaya && (
                       <p>
-                        <strong>الرمز البريدي:</strong> {order.shipping_address.postalCode}
+                        <strong>الولاية:</strong> {getWilayaName(order.shipping_address.wilaya)}
                       </p>
                     )}
                   </div>

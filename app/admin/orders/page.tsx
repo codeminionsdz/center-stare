@@ -29,16 +29,17 @@ async function getOrders() {
 
   return orders.map((order: any) => {
     const shippingAddr = order.shipping_address as any
-    const customerName = shippingAddr 
-      ? `${shippingAddr.firstName || ''} ${shippingAddr.lastName || ''}`.trim()
-      : "Guest"
+    const customerName =
+      shippingAddr?.fullName ||
+      `${shippingAddr?.firstName || ""} ${shippingAddr?.lastName || ""}`.trim() ||
+      "Guest"
     
     const itemCount = Array.isArray(order.order_items) ? order.order_items.length : 0
     
     return {
       uuid: order.id,
       id: `ORD-${order.id.substring(0, 8).toUpperCase()}`,
-      customer: customerName || "Guest",
+      customer: customerName,
       email: shippingAddr?.email || "",
       phone: shippingAddr?.phone || "",
       items: itemCount,

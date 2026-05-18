@@ -391,14 +391,15 @@ export default function OrderDetailsPage() {
                   Shipping Address
                 </h3>
                 <div className="space-y-2 text-sm">
-                  <p>
-                    {order.shipping_address?.firstName} {order.shipping_address?.lastName}
-                  </p>
-                  <p className="text-muted-foreground">{order.shipping_address?.address}</p>
-                  <p className="text-muted-foreground">
-                    {order.shipping_address?.city}, {getWilayaName(order.shipping_address?.wilaya)}
-                  </p>
-                  <p className="text-muted-foreground">{order.shipping_address?.postalCode}</p>
+                  <p>{order.shipping_address?.fullName || `${order.shipping_address?.firstName || ""} ${order.shipping_address?.lastName || ""}`.trim()}</p>
+                  {order.shipping_address?.address && <p className="text-muted-foreground">{order.shipping_address.address}</p>}
+                  {(order.shipping_address?.city || order.shipping_address?.wilaya) && (
+                    <p className="text-muted-foreground">
+                      {order.shipping_address?.city}
+                      {order.shipping_address?.city && order.shipping_address?.wilaya ? ", " : ""}
+                      {getWilayaName(order.shipping_address?.wilaya)}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -408,14 +409,18 @@ export default function OrderDetailsPage() {
               <div>
                 <h3 className="font-semibold mb-4">Contact Information</h3>
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
-                    <span>{order.shipping_address?.phone}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                    <span>{order.shipping_address?.email}</span>
-                  </div>
+                  {order.shipping_address?.phone && (
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-muted-foreground" />
+                      <span>{order.shipping_address.phone}</span>
+                    </div>
+                  )}
+                  {order.shipping_address?.email && (
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-muted-foreground" />
+                      <span>{order.shipping_address.email}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
