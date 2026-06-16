@@ -88,7 +88,7 @@ function RegisterContent() {
       )
 
       // Generate a unique email from phone for Supabase Auth (hidden from user)
-      const generatedEmail = `phone-${formData.phone}@timedz.local`
+      const generatedEmail = `phone-${formData.phone}@centerstare.local`
 
       console.log("Attempting to sign up with phone:", formData.phone)
 

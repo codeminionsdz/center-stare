@@ -115,6 +115,7 @@ export interface FilterOptions {
   maxPrice?: number
   inStock?: boolean
   sortBy?: "price-asc" | "price-desc" | "name" | "newest" | "popular"
+  q?: string
 }
 
 export interface PaginatedResponse<T> {

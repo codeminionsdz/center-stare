@@ -35,7 +35,7 @@ export function BrandCard({ brand, className }: BrandCardProps) {
       </h3>
       
       <p className="text-sm text-muted-foreground font-medium mt-1">
-        {brand.productCount} Timepieces
+        {brand.productCount} Products
       </p>
 
       {/* Bottom accent line */}

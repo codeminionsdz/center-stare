@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "images:process": "node scripts/images/convert.js",
+    "images:fetch-banners": "node scripts/images/fetch-banners.js",
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",
@@ -65,6 +67,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "sharp": "^0.32.1",
     "@tailwindcss/postcss": "^4.1.9",
     "@types/node": "^22",
     "@types/react": "^19",

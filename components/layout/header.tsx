@@ -99,7 +99,7 @@ export function Header({ categories: initialCategories }: HeaderProps) {
                   {t("header.support")}
                 </Link>
               </div>
-              <p className="md:hidden text-xs">Premium Watches • Global Shipping</p>
+              <p className="md:hidden text-xs">Pro Hair Tools • Fast Shipping</p>
             </div>
           </div>
         </div>
@@ -110,10 +110,10 @@ export function Header({ categories: initialCategories }: HeaderProps) {
         <div className="flex items-center justify-between gap-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="relative w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-silver-100 to-silver-200 rounded-lg p-1 shadow-xl group-hover:shadow-2xl transition-all duration-500">
-              <Image
-                src="/images/image.png"
-                alt="TimeDZ"
+            <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-lg p-1 flex items-center justify-center bg-silver-100 shadow-subtle transition-all duration-300">
+                <Image
+                  src="/images/image.png"
+                alt="CENTER STARE"
                 width={56}
                 height={56}
                 className="w-full h-full object-contain"
@@ -121,8 +121,8 @@ export function Header({ categories: initialCategories }: HeaderProps) {
               />
             </div>
             <div className="hidden sm:flex flex-col">
-              <span className="text-xl md:text-2xl font-bold text-black-800 tracking-wider">TIMEDZ</span>
-              <span className="text-xs text-gold-500 tracking-[0.15em] font-light">LUXURY WATCHES</span>
+              <span className="text-xl md:text-2xl font-bold text-black-800 tracking-wider">CENTER STARE</span>
+              <span className="text-xs text-gold-500 tracking-[0.15em] font-light">HAIR & BARBER ACCESSORIES</span>
             </div>
           </Link>
 
@@ -133,7 +133,7 @@ export function Header({ categories: initialCategories }: HeaderProps) {
               <Input
                 type="search"
                 name="q"
-                placeholder="Search collections..."
+                placeholder="Search hair tools, clippers, accessories..."
                 className="w-full pl-12 pr-5 py-3 h-12 bg-silver-100 border border-border rounded-lg focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:border-transparent transition-all duration-300"
               />
             </form>
@@ -294,7 +294,7 @@ export function Header({ categories: initialCategories }: HeaderProps) {
               <Input
                 type="search"
                 name="q"
-                placeholder="Search collections..."
+                placeholder="Search hair tools, clippers, accessories..."
                 className="w-full pl-12 pr-5 py-3 h-11 bg-silver-100 border border-border rounded-lg"
                 autoFocus
               />

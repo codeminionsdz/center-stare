@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingBag } from "lucide-react"
+import { ShoppingBag, ShieldCheck, Lock, Truck } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -40,16 +40,35 @@ export function CartDrawer() {
             </ScrollArea>
 
             <div className="border-t border-border pt-4 mt-auto space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-semibold text-lg">{formatPrice(subtotal)}</span>
-              </div>
-              <p className="text-sm text-muted-foreground">Shipping calculated at checkout</p>
-              <div className="flex flex-col gap-2">
-                <Button size="lg" asChild onClick={closeCart}>
-                  <Link href="/checkout">Proceed to Checkout</Link>
-                </Button>
-              </div>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-3 gap-3 text-center">
+                    <div className="flex flex-col items-center">
+                      <ShieldCheck className="h-5 w-5 text-primary" />
+                      <span className="text-xs text-muted-foreground">Secure Payment</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <Truck className="h-5 w-5 text-primary" />
+                      <span className="text-xs text-muted-foreground">Fast Delivery</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <Lock className="h-5 w-5 text-primary" />
+                      <span className="text-xs text-muted-foreground">Safe Checkout</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="font-semibold text-lg">{formatPrice(subtotal)}</span>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground">Shipping calculated at checkout</p>
+
+                  <div className="flex flex-col gap-2">
+                    <Button size="lg" asChild onClick={closeCart}>
+                      <Link href="/checkout">Proceed to Checkout</Link>
+                    </Button>
+                  </div>
+                </div>
             </div>
           </>
         )}

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
-import { ProductDetails } from "@/components/product/product-details"
+import { ProductDetails } from "@/components/product/product-details-full"
 import { ProductCard } from "@/components/product/product-card"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 import { getProductBySlug, getRelatedProducts } from "@/lib/data"

@@ -39,10 +39,10 @@ export function AdminSidebar() {
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
         <div className="relative w-10 h-10 bg-white rounded-lg p-0.5 shadow-sm">
-          <Image src="/images/image.png" alt="TIMEDZ" width={40} height={40} className="w-full h-full object-contain" />
+          <Image src="/images/logo-center-stare.svg" alt="CENTER STARE" width={40} height={40} className="w-full h-full object-contain" />
         </div>
         <div>
-          <p className="font-semibold">TIMEDZ</p>
+          <p className="font-semibold">CENTER STARE</p>
           <p className="text-xs text-muted-foreground">Admin Panel</p>
         </div>
       </div>

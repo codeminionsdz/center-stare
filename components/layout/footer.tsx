@@ -13,10 +13,10 @@ function FooterContent() {
   const footerLinks = {
     shop: [
       { name: t("footer.all_categories") || "Collections", href: "/categories" },
-      { name: t("footer.skincare") || "Men's Watches", href: "/categories/skincare" },
-      { name: t("footer.vitamins") || "Women's Watches", href: "/categories/vitamins-supplements" },
+      { name: "Clippers & Tools", href: "/categories/clippers" },
+      { name: "Combs & Brushes", href: "/categories/combs-brushes" },
       { name: t("footer.hair_care") || "Accessories", href: "/categories/hair-care" },
-      { name: "Pre-Owned", href: "/categories/baby-mom" },
+      { name: "Starter Kits", href: "/categories/kits" },
       { name: t("footer.brands") || "All Brands", href: "/brands" },
     ],
     support: [
@@ -28,10 +28,10 @@ function FooterContent() {
   }
 
   const trustFeatures = [
-    { icon: Shield, title: "Authentic Luxury", description: "Verified timepieces guaranteed" },
-    { icon: Zap, title: "Premium Selection", description: "Hand-curated collections" },
+    { icon: Shield, title: "Authentic Tools", description: "Genuine, pro-grade equipment" },
+    { icon: Zap, title: "Curated Selection", description: "Hand-picked by professionals" },
     { icon: CreditCard, title: "Secure Payments", description: "Protected transactions" },
-    { icon: Clock, title: "Expert Support", description: "24/7 concierge service" },
+    { icon: Clock, title: "Expert Support", description: "Product guidance & trade support" },
   ]
 
   return (
@@ -65,29 +65,29 @@ function FooterContent() {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <div className="relative w-14 h-14 bg-gradient-to-br from-silver-200 to-silver-300 rounded-lg p-1 shadow-xl group-hover:shadow-2xl group-hover:shadow-gold-500/20 transition-all duration-500">
+              <div className="relative w-14 h-14 rounded-lg p-1 bg-silver-100 flex items-center justify-center shadow-subtle transition-all duration-300">
                 <Image
                   src="/images/image.png"
-                  alt="TimeDZ"
+                  alt="Center Star"
                   width={56}
                   height={56}
                   className="w-full h-full object-contain"
                 />
               </div>
               <div>
-                <span className="text-2xl font-bold text-white tracking-wider">TIMEDZ</span>
-                <span className="text-xs text-gold-400 tracking-widest font-bold">LUXURY TIMEPIECES</span>
+                <span className="text-2xl font-bold text-white tracking-wider">CENTER STARE</span>
+                <span className="text-xs text-gold-400 tracking-widest font-bold">HAIR & BARBER ACCESSORIES</span>
               </div>
             </Link>
 
             <p className="text-silver-300 mb-8 max-w-sm leading-relaxed">
-              Discover an exclusive collection of premium timepieces from the world's most prestigious watchmakers. Authentic. Certified. Guaranteed.
+              Curated professional hairdressing and barber tools — pro-grade, reliable, and ready for daily use.
             </p>
 
             {/* Premium Newsletter */}
             <div className="mb-8">
               <h4 className="font-bold text-white mb-3 tracking-wide uppercase text-sm">
-                Join The Elite Circle
+                Join The Professional Circle
               </h4>
               <div className="flex gap-2">
                 <Input
@@ -105,7 +105,7 @@ function FooterContent() {
             {/* Social Links */}
             <div className="flex gap-3">
               <a
-                href="https://www.facebook.com/share/18qWG8JTva/?mibextid=wwXIfr"
+                href="https://www.facebook.com/share/1J1D5J9m8J/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-black-900 hover:bg-gold-500 text-silver-300 hover:text-black-800 transition-all duration-300 hover:scale-110"
@@ -114,7 +114,7 @@ function FooterContent() {
                 <span className="sr-only">Facebook</span>
               </a>
               <a
-                href="https://www.instagram.com/timedz.store?igsh=MW10Z2sxanBhMHZjdA%3D%3D&utm_source=qr"
+                href="https://www.instagram.com/centerstartagast?igsh=MXR4MTZ6ejZyeGdyag=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-black-900 hover:bg-gold-500 text-silver-300 hover:text-black-800 transition-all duration-300 hover:scale-110"
@@ -123,7 +123,7 @@ function FooterContent() {
                 <span className="sr-only">Instagram</span>
               </a>
               <a
-                href="https://www.tiktok.com/@timedz2?_r=1&_t=ZS-96RoqmeBgLY"
+                href="https://www.tiktok.com/@center.star.tagast?_r=1&_d=f30d4amgiaj9ll&sec_uid=MS4wLjABAAAAUIMaKYec89LdbTGS0SrO9XRS9lHusKyVpEE7jPyKHA5JHGpgQjDYstfzV-lzziJI&share_author_id=6862817392763814917&sharer_language=fr&source=h5_m&u_code=de3ga8fk679lfe&timestamp=1781278817&user_id=6862817392763814917&sec_user_id=MS4wLjABAAAAUIMaKYec89LdbTGS0SrO9XRS9lHusKyVpEE7jPyKHA5JHGpgQjDYstfzV-lzziJI&item_author_type=1&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7649350690394113812&share_link_id=540adc62-0dd6-4194-a01e-1b6303a8fd9d&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb7360&social_share_type=5&enable_checksum=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-black-900 hover:bg-gold-500 text-silver-300 hover:text-black-800 transition-all duration-300 hover:scale-110"
@@ -185,14 +185,15 @@ function FooterContent() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-gold-400 shrink-0" />
-                <a href="tel:+213770867403" className="text-silver-300 hover:text-gold-400 transition-colors duration-300 font-medium">
-                  +213 770 867 403
-                </a>
+                <div className="text-silver-300 transition-colors duration-300 font-medium">
+                  <a href="tel:+213665048755" className="hover:underline block">+213 665 04 87 55</a>
+                  <a href="tel:+213665058469" className="hover:underline block">+213 665 05 84 69</a>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-gold-400 shrink-0" />
-                <a href="mailto:info@timedz.com" className="text-silver-300 hover:text-gold-400 transition-colors duration-300 font-medium">
-                  info@timedz.com
+                <a href="mailto:info@centerstare.com" className="text-silver-300 hover:text-gold-400 transition-colors duration-300 font-medium">
+                  info@centerstare.com
                 </a>
               </li>
             </ul>
@@ -204,8 +205,8 @@ function FooterContent() {
       <div className="border-t border-border/10 bg-black-900">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-sm text-silver-400 font-medium">
-              © {new Date().getFullYear()} TimeDZ. All rights reserved. Premium luxury watches curated for collectors.
+                <p className="text-sm text-silver-400 font-medium">
+              © {new Date().getFullYear()} CENTER STARE. All rights reserved. Professional hair & barber accessories.
             </p>
             <div className="flex gap-8 text-sm">
               <Link href="/privacy" className="text-silver-400 hover:text-gold-400 transition-colors duration-300 font-medium">

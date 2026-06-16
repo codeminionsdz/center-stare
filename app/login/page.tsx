@@ -58,7 +58,7 @@ function LoginContent() {
       )
 
       // Generate email from phone for auth (same as in register)
-      const generatedEmail = `phone-${formData.phone}@timedz.local`
+      const generatedEmail = `phone-${formData.phone}@centerstare.local`
 
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email: generatedEmail,

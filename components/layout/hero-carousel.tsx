@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { ArrowRight, Sparkles, Heart, Star } from "lucide-react"
+import Image from "next/image"
+import { ArrowRight } from "lucide-react"
+import { ScissorsIcon, ClipperIcon, BottleIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
@@ -37,8 +39,8 @@ function HeroCarouselContent() {
       secondaryBtnKey: "hero.explore_brands",
       primaryBtnHref: "/categories",
       secondaryBtnHref: "/brands",
-      backgroundImage: "/images/banners/hero-1.webp",
-      icon: Star,
+      backgroundImage: "https://uppercutdeluxe.com/cdn/shop/collections/Barbers-Collection.jpg?v=1710456597&width=1920",
+      icon: ScissorsIcon,
       gradientOpacity: "rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.25)",
     },
     {
@@ -50,8 +52,8 @@ function HeroCarouselContent() {
       secondaryBtnKey: "hero.browse_all",
       primaryBtnHref: "/categories",
       secondaryBtnHref: "/products",
-      backgroundImage: "/images/banners/hero-2.webp",
-      icon: Sparkles,
+      backgroundImage: "https://imgs.search.brave.com/w1ihLDlM0zENKYzdfVfiyFxU_MPeAVsXI73WtH-rhVI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjAw/NTAzNTU2OC9waG90/by9wcm9mZXNzaW9u/YWwtdG9vbHMtb2Yt/YS1iYXJiZXItaW4t/YS1tZW5zLWJhcmJl/cnNob3Aud2VicD9h/PTEmYj0xJnM9NjEy/eDYxMiZ3PTAmaz0y/MCZjPTZvN3k0RVYx/dy1FWTNSWW5MQXEt/MHBIV0FGQ0MycjBm/WEE5UGN4SGpBTk09",
+      icon: ClipperIcon,
       gradientOpacity: "rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.25)",
     },
     {
@@ -63,8 +65,8 @@ function HeroCarouselContent() {
       secondaryBtnKey: "hero.our_brands",
       primaryBtnHref: "/categories",
       secondaryBtnHref: "/brands",
-      backgroundImage: "/images/banners/hero-3.webp",
-      icon: Heart,
+      backgroundImage: "https://imgs.search.brave.com/8120Lll8mmg4QRjn7Rv9YBua6nA09D7SYPamDSO1vDg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9qb2hu/YmFyYmVyc29ucy5j/b20vY2RuL3Nob3Av/ZmlsZXMvenViZWhv/ZXIud2VicD92PTE3/Mzc4MDI3OTYmd2lk/dGg9MTAwMA",
+      icon: BottleIcon,
       gradientOpacity: "rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.25)",
     },
   ]
@@ -114,22 +116,28 @@ function HeroCarouselContent() {
                 <section 
                   className="relative overflow-hidden min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px]"
                   style={{
-                    backgroundImage: `url('${slide.backgroundImage}')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
                     backgroundColor: '#1a1a2e',
                   }}
                 >
+                  {/* Background image (use next/image fill for reliable loading) */}
+                  <div className="absolute inset-0 z-0">
+                    {slide.backgroundImage.startsWith("http") ? (
+                      // use plain img for remote unsplash source so browsers load directly
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={slide.backgroundImage} alt={`Hero ${slide.id}`} className="w-full h-full object-cover" />
+                    ) : (
+                      <Image src={slide.backgroundImage} alt={`Hero ${slide.id}`} fill className="object-cover" priority />
+                    )}
+                  </div>
                   {/* Premium cinematic overlay gradient */}
                   <div 
-                    className="absolute inset-0"
+                    className="absolute inset-0 z-10"
                     style={{
                       background: `linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.15) 100%)`,
                     }}
                   />
 
-                  <div className="container relative mx-auto px-4 py-12 sm:py-16 md:py-24 lg:py-32 z-10 h-full flex items-center justify-center">
+                  <div className="container relative mx-auto px-4 py-12 sm:py-16 md:py-24 lg:py-32 z-20 h-full flex items-center justify-center">
                   <div className="max-w-4xl mx-auto text-center w-full">
                     {/* Luxury animated badge */}
                     <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-gold-500/20 to-gold-600/20 backdrop-blur-md border border-gold-500/50 text-gold-300 text-xs sm:text-sm font-bold rounded-full mb-4 sm:mb-8 shadow-lg animate-fade-in-up hover:from-gold-500/30 hover:to-gold-600/30 transition-all duration-300 tracking-widest uppercase">

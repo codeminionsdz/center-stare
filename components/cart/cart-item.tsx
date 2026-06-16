@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Minus, Plus, Trash2 } from "lucide-react"
+import { Minus, Plus, Trash2, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/lib/cart-context"
 import { formatPrice } from "@/lib/format"
@@ -63,18 +63,33 @@ export function CartItem({ item }: CartItemProps) {
         </div>
       </div>
 
-      {/* Price & Remove */}
+      {/* Price & Actions */}
       <div className="flex flex-col items-end justify-between">
-        <span className="font-semibold">{formatPrice(product.price * quantity)}</span>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 text-muted-foreground hover:text-destructive"
-          onClick={() => removeItem(product.id)}
-        >
-          <Trash2 className="h-4 w-4" />
-          <span className="sr-only">Remove item</span>
-        </Button>
+        <div className="text-right">
+          <div className="text-sm text-muted-foreground">Unit: {formatPrice(product.price)}</div>
+          <div className="font-semibold">{formatPrice(product.price * quantity)}</div>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-muted-foreground hover:text-destructive"
+            onClick={() => removeItem(product.id)}
+          >
+            <Trash2 className="h-4 w-4" />
+            <span className="sr-only">Remove item</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-muted-foreground"
+            onClick={() => {/* save for later - visual only */}}
+            title="Save for later"
+          >
+            <Star className="h-4 w-4" />
+            <span className="sr-only">Save for later</span>
+          </Button>
+        </div>
       </div>
     </div>
   )

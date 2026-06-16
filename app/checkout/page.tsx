@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Progress } from "@/components/ui/progress"
 import { useCart } from "@/lib/cart-context"
 import { formatPrice } from "@/lib/format"
 import { useLanguage } from "@/lib/language-context"
@@ -71,6 +72,11 @@ export default function CheckoutPage() {
   const isFreeShipping = subtotal >= freeShippingThreshold && (settings?.enable_free_shipping ?? true)
   const finalShipping = isFreeShipping ? 0 : shippingCost
   const total = subtotal - promoDiscount + finalShipping
+
+  const progress = Math.min(
+    100,
+    (items.length > 0 ? 33 : 0) + (selectedWilaya ? 33 : 0) + (paymentMethod ? 34 : 0),
+  )
 
   const handleApplyPromo = async () => {
     setPromoError("")
@@ -190,7 +196,16 @@ export default function CheckoutPage() {
       </nav>
 
       <div className="container mx-auto px-4 py-8 md:py-12">
-        <h1 className="text-2xl md:text-3xl font-bold mb-8">{t("checkout.title")}</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-4">{t("checkout.title")}</h1>
+
+        <div className="mb-6">
+          <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+            <div>Cart</div>
+            <div>Shipping</div>
+            <div>Payment</div>
+          </div>
+          <Progress value={progress} />
+        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="grid lg:grid-cols-3 gap-8">

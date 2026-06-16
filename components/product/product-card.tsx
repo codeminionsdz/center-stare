@@ -1,11 +1,12 @@
 "use client"
 
-import type React from "react"
+import React, { useState } from "react"
 
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Heart, ShoppingCart, Star, Zap } from "lucide-react"
+import { Heart, ShoppingCart, Star } from "lucide-react"
+import { ScissorsIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/lib/cart-context"
@@ -20,6 +21,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, className }: ProductCardProps) {
+  const [imgLoaded, setImgLoaded] = useState(false)
   const router = useRouter()
   const { addItem } = useCart()
   const { toast } = useToast()
@@ -57,11 +59,18 @@ export function ProductCard({ product, className }: ProductCardProps) {
         {/* Background gradient overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-br from-gold-500/0 to-gold-500/0 group-hover:from-gold-500/5 group-hover:to-gold-500/10 transition-all duration-500 z-10 pointer-events-none" />
         
+        {/* Skeleton shown until image finishes loading */}
+        <div className={imgLoaded ? "hidden" : "absolute inset-0 z-15 bg-gradient-to-br from-silver-100/80 to-silver-200/80 animate-pulse"} />
+
         <Image
           src={product.images[0] || "/placeholder.svg?height=400&width=400"}
           alt={product.name}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          loading="lazy"
+          onLoadingComplete={() => setImgLoaded(true)}
+          className={
+            `object-cover transition-transform duration-700 group-hover:scale-110 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`
+          }
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           priority={false}
         />
@@ -70,7 +79,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <div className="absolute top-4 left-4 flex flex-col gap-2 z-20">
           {hasDiscount && (
             <Badge className="bg-gradient-to-r from-gold-500 to-gold-600 text-black-800 font-bold px-3 py-1 rounded-full shadow-lg">
-              <Zap className="h-3 w-3 mr-1" />
+              <ScissorsIcon className="h-3 w-3 mr-1 text-black-800" />
               -{discountPercentage}%
             </Badge>
           )}
@@ -165,7 +174,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             disabled={product.stock === 0}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
-            {product.stock === 0 ? "Out of Stock" : "Add to Collection"}
+            {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
           </Button>
           
           {product.stock > 0 && (
@@ -173,7 +182,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
               className="w-full py-3 rounded-lg font-semibold transition-all duration-300 text-sm tracking-wide bg-gold-600 hover:bg-gold-700 text-black hover:shadow-lg hover:shadow-gold-500/30"
               onClick={handleBuyNow}
             >
-              <Zap className="h-4 w-4 mr-2" />
+              <ScissorsIcon className="h-4 w-4 mr-2 text-black-800" />
               Buy Now
             </Button>
           )}

@@ -153,7 +153,7 @@ export default function AdminSettingsPage() {
                   <div className="space-y-3 text-sm">
                     <div>
                       <span className="font-medium">Store Name:</span>
-                      <p className="text-muted-foreground">Timedz Store</p>
+                      <p className="text-muted-foreground">CENTER STARE</p>
                     </div>
                     <div>
                       <span className="font-medium">Description:</span>
@@ -161,11 +161,11 @@ export default function AdminSettingsPage() {
                     </div>
                     <div>
                       <span className="font-medium">Contact Email:</span>
-                      <p className="text-muted-foreground">timedzstore@gmail.com</p>
+                      <p className="text-muted-foreground">contact@centerstare.com</p>
                     </div>
                     <div>
                       <span className="font-medium">Contact Phone:</span>
-                      <p className="text-muted-foreground">+213770867403</p>
+                      <p className="text-muted-foreground">+213 665 04 87 55</p>
                     </div>
                     <div>
                       <span className="font-medium">Address:</span>
@@ -173,14 +173,14 @@ export default function AdminSettingsPage() {
                     </div>
                     <div>
                       <span className="font-medium">Instagram:</span>
-                      <a href="https://www.instagram.com/timedz.store?igsh=MW10Z2sxanBhMHZjdA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                        @timedz.store
+                      <a href="https://www.instagram.com/centerstartagast?igsh=MXR4MTZ6ejZyeGdyag==" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        @centerstartagast
                       </a>
                     </div>
                     <div>
                       <span className="font-medium">Facebook:</span>
-                      <a href="https://www.facebook.com/share/18qWG8JTva/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                        TIMEDZ - Luxury Watches
+                      <a href="https://www.facebook.com/share/1J1D5J9m8J/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        CENTER STARE - Facebook
                       </a>
                     </div>
                   </div>

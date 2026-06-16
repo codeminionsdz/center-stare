@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { ClientLayout } from "@/components/layout/client-layout"
@@ -8,18 +8,19 @@ import { CartProvider } from "@/lib/cart-context"
 import { WishlistProvider } from "@/lib/wishlist-context"
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" })
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-heading", display: "swap" })
 
 export const metadata: Metadata = {
-  title: "TIMEDZ | Premium Luxury Watches - Authentic Timepieces",
+  title: "CENTER STARE | Professional Hair & Barber Accessories",
   description:
-    "Discover exclusive collection of authentic luxury watches from premium brands. Certified pre-owned and new timepieces delivered across Algeria. Expert service and guaranteed authenticity.",
-  keywords: ["watches", "luxury timepieces", "authentic watches", "premium brands", "timedz", "algeria", "souk ahras", "certified watches"],
+    "CENTER STARE — Professional hairdressing and barber accessories. Curated tools, grooming products and pro-grade supplies for stylists and enthusiasts.",
+  keywords: ["hair accessories", "barber supplies", "grooming products", "professional hair tools", "CENTER STARE"],
   generator: 'v0.app'
 }
 
 export const viewport: Viewport = {
-  themeColor: "#0d9488",
+  themeColor: "#111111",
   width: "device-width",
   initialScale: 1,
 }
@@ -31,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning dir="ltr">
-      <body className={`${inter.className} font-sans antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`} suppressHydrationWarning>
         <CartProvider>
           <WishlistProvider>
             <ClientLayout>{children}</ClientLayout>

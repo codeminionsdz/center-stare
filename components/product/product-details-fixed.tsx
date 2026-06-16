@@ -30,50 +30,6 @@ import { formatPrice, calculateDiscount } from "@/lib/format"
 import type { Product } from "@/lib/types"
 
 interface ProductDetailsProps {
-          </div>
-        </div>
-
-        {/* Upsell / Related - placeholder, page-level related products are rendered by the page file. */}
-        <div className="mt-6">
-          <UpsellSection relatedProducts={[]} />
-        </div>
-      </aside>
-    </div>
-  )
-}
-"use client"
-
-import React, { useState } from "react"
-import { useRouter } from "next/navigation"
-import Image from "next/image"
-import {
-  ShoppingCart,
-  Heart,
-  Truck,
-  ShieldCheck,
-  RotateCcw,
-  Check,
-  Minus,
-  Plus,
-  Share2,
-  Copy,
-  Facebook,
-  MessageCircle,
-  Mail,
-  Zap,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ProductSpecifications } from "@/components/product/product-specs"
-import { ProductReviews } from "@/components/product/product-reviews"
-import { UpsellSection } from "@/components/product/product-upsell"
-import { useCart } from "@/lib/cart-context"
-import { useWishlist } from "@/lib/wishlist-context"
-import { useToast } from "@/hooks/use-toast"
-import { formatPrice, calculateDiscount } from "@/lib/format"
-import type { Product } from "@/lib/types"
-
-interface ProductDetailsProps {
   product: Product
 }
 
@@ -91,7 +47,6 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   const isInStock = product.stock > 0
   const isLowStock = product.stock > 0 && product.stock <= 5
 
-  // Get product URL
   const productUrl = typeof window !== "undefined" ? `${window.location.origin}/products/${product.slug}` : ""
 
   const handleAddToCart = () => {
@@ -323,105 +278,149 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                 disabled={!isInStock || quantity >= product.stock}
                 aria-label="Increase quantity"
               >
-                <Plus className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="mt-6 grid gap-3">
-              <Button size="lg" className="w-full btn-primary rounded-full py-4" onClick={handleAddToCart} disabled={!isInStock}>
-                <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
-              </Button>
-              <Button size="lg" className="w-full bg-gold-600 text-black rounded-full py-4" onClick={handleBuyNow} disabled={!isInStock}>
-                <Zap className="mr-2 h-5 w-5" /> Buy Now
-              </Button>
-            </div>
-
-            <p className="text-xs text-muted-foreground mt-3">Secure checkout • Fast processing • Authentic products</p>
-
-            <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-              <div className="flex flex-col items-center">
-                <Truck className="h-5 w-5 text-primary" />
-                <span className="text-xs text-muted-foreground">Fast Delivery</span>
+            return (
+              <div className="space-y-4">
+                <h1 className="text-2xl font-bold">{product.name}</h1>
+                <div className="text-lg text-primary">{formatPrice(product.price)}</div>
+                <p className="text-muted-foreground">{product.shortDescription}</p>
               </div>
-              <div className="flex flex-col items-center">
-                <ShieldCheck className="h-5 w-5 text-primary" />
-                <span className="text-xs text-muted-foreground">100% Authentic</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <RotateCcw className="h-5 w-5 text-primary" />
-                <span className="text-xs text-muted-foreground">Easy Returns</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Upsell / Related - placeholder, page-level related products are rendered by the page file. */}
-        <div className="mt-6">
-          <UpsellSection relatedProducts={[]} />
-        </div>
-      </aside>
-    </div>
-  )
-}
-                  className="w-full px-4 py-4 text-left flex items-center gap-3 hover:bg-secondary transition-colors border-b border-border"
-                >
-                  <Facebook className="h-5 w-5 text-blue-600" />
-                  <span className="text-sm font-medium">Share on Facebook</span>
-                </button>
-
-                <button
-                  onClick={handleShareWhatsApp}
-                  className="w-full px-4 py-4 text-left flex items-center gap-3 hover:bg-secondary transition-colors border-b border-border"
-                >
-                  <MessageCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-sm font-medium">Share on WhatsApp</span>
-                </button>
-
-                <button
-                  onClick={handleShareEmail}
-                  className="w-full px-4 py-4 text-left flex items-center gap-3 hover:bg-secondary transition-colors"
-                >
-                  <Mail className="h-5 w-5" />
-                  <span className="text-sm font-medium">Share via Email</span>
-                </button>
-              </div>
+            )
+              className="object-contain p-4"
+              priority
+            />
+            {hasDiscount && (
+              <Badge className="absolute top-4 left-4 bg-destructive text-destructive-foreground">-{discountPercentage}%</Badge>
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 pt-6 border-t border-border">
-          <div className="flex flex-col items-center text-center gap-2">
-            <Truck className="h-6 w-6 text-primary" />
-            <span className="text-xs text-muted-foreground">Fast Delivery</span>
+        {product.images.length > 1 && (
+          <div className="flex gap-3 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
+            {product.images.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedImage(index)}
+                aria-label={`View image ${index + 1}`}
+                className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 flex-shrink-0 transition-colors ${
+                  selectedImage === index ? "border-primary" : "border-border hover:border-muted-foreground"
+                }`}
+              >
+                <Image
+                  src={image || "/placeholder.svg?height=80&width=80&query=product thumbnail"}
+                  alt={`${product.name} view ${index + 1}`}
+                  fill
+                  className="object-contain p-1"
+                />
+              </button>
+            ))}
           </div>
-          <div className="flex flex-col items-center text-center gap-2">
-            <ShieldCheck className="h-6 w-6 text-primary" />
-            <span className="text-xs text-muted-foreground">100% Authentic</span>
+        )}
+      </div>
+
+      {/* Product Info & Details */}
+      <div className="space-y-6 lg:col-span-1">
+        <div className="text-sm text-muted-foreground">{product.brandName}</div>
+
+        <h1 className="text-2xl md:text-3xl font-bold">{product.name}</h1>
+
+        <div className="text-sm text-muted-foreground">SKU: {product.sku}</div>
+
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-bold text-primary">{formatPrice(product.price)}</span>
+          {hasDiscount && <span className="text-lg text-muted-foreground line-through">{formatPrice(product.originalPrice!)}</span>}
+        </div>
+
+        <div className="flex items-center gap-2">
+          {isInStock ? (
+            <>
+              <Check className="h-5 w-5 text-green-600" />
+              <span className={`font-medium ${isLowStock ? "text-orange-600" : "text-green-600"}`}>
+                {isLowStock ? `Only ${product.stock} left in stock` : "In Stock"}
+              </span>
+            </>
+          ) : (
+            <span className="text-destructive font-medium">Out of Stock</span>
+          )}
+        </div>
+
+        <p className="text-muted-foreground leading-relaxed">{product.shortDescription}</p>
+
+        {/* Compact mobile CTAs */}
+        <div className="lg:hidden space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center overflow-hidden rounded-full border border-border bg-background">
+              <button
+                type="button"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="grid h-10 w-10 place-items-center transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={!isInStock}
+                aria-label="Decrease quantity"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="min-w-12 px-3 text-center text-base font-semibold">{quantity}</span>
+              <button
+                type="button"
+                onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                className="grid h-10 w-10 place-items-center transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={!isInStock || quantity >= product.stock}
+                aria-label="Increase quantity"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+
+            <Button size="lg" className="flex-1" onClick={handleAddToCart} disabled={!isInStock}>
+              <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
+            </Button>
           </div>
-          <div className="flex flex-col items-center text-center gap-2">
-            <RotateCcw className="h-6 w-6 text-primary" />
-            <span className="text-xs text-muted-foreground">Easy Returns</span>
+
+          <div className="flex gap-2">
+            <Button variant="outline" className="flex-1" onClick={handleWishlist} title="Add to Wishlist">
+              <Heart className={`h-5 w-5 ${isInWishlist(product.id) ? "fill-red-500 text-red-500" : ""}`} />
+              <span className="ml-2">Wishlist</span>
+            </Button>
+            <Button variant="outline" className="flex-1" onClick={() => setShowShareMenu(!showShareMenu)}>
+              <Share2 className="h-5 w-5" />
+              <span className="ml-2">Share</span>
+            </Button>
           </div>
         </div>
 
-        <div className="pt-6 border-t border-border">
+        <div className="pt-4 border-t border-border">
           <h3 className="font-semibold mb-3">Description</h3>
           <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{product.description}</p>
         </div>
 
-        {product.tags.length > 0 && (
-          <div className="pt-6 border-t border-border">
-            <h3 className="font-semibold mb-3">Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {product.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
+        <ProductSpecifications product={product} />
+        <ProductReviews product={product} />
+      </div>
+
+      {/* Sticky Add-to-Cart Panel */}
+      <aside className="lg:col-span-1">
+        <div className="sticky top-24 rounded-2xl border border-border bg-card p-6 shadow-subtle">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-muted-foreground">Price</div>
+              <div className="text-2xl font-bold">{formatPrice(product.price)}</div>
+              {hasDiscount && <div className="text-sm text-muted-foreground line-through">{formatPrice(product.originalPrice!)}</div>}
+            </div>
+            <div className="w-20 h-20 relative rounded-md overflow-hidden bg-secondary/10">
+              <Image src={product.images[0] || "/placeholder.svg?height=80&width=80"} alt={product.name} fill className="object-contain p-2" />
             </div>
           </div>
-        )}
-      </div>
-    </div>
-  )
-}
+
+          <div className="mt-6">
+            <div className="text-sm font-medium text-muted-foreground mb-2">Quantity</div>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="grid h-12 w-12 place-items-center rounded-full border border-border hover:bg-muted"
+                disabled={!isInStock}
+                aria-label="Decrease quantity"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+
+... (file truncated for brevity) ...

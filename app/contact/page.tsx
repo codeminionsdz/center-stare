@@ -38,9 +38,14 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-semibold mb-1">Call Us</h3>
                 <p className="text-muted-foreground mb-2">Available Monday to Saturday, 9:00 AM to 6:00 PM</p>
-                <a href="tel:+213770867403" className="text-primary font-medium hover:underline">
-                  +213 773 23 29 41
-                </a>
+                <div className="text-primary font-medium">
+                  <a href="tel:+213665048755" className="hover:underline block">
+                    +213 665 04 87 55
+                  </a>
+                  <a href="tel:+213665058469" className="hover:underline block">
+                    +213 665 05 84 69
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -51,8 +56,8 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-semibold mb-1">Email Us</h3>
                 <p className="text-muted-foreground mb-2">Send us your questions or concerns</p>
-                <a href="mailto:contact@timedz.com" className="text-primary font-medium hover:underline">
-                  contact@timedz.com
+                <a href="mailto:contact@centerstare.com" className="text-primary font-medium hover:underline">
+                  contact@centerstare.com
                 </a>
               </div>
             </div>
@@ -145,7 +150,7 @@ export default function ContactPage() {
           <div className="flex justify-center gap-4">
             <Button variant="outline" asChild>
               <a
-                href="https://www.facebook.com/share/18qWG8JTva/?mibextid=wwXIfr"
+                href="https://www.facebook.com/share/1J1D5J9m8J/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -154,7 +159,7 @@ export default function ContactPage() {
             </Button>
             <Button variant="outline" asChild>
               <a
-                href="https://www.instagram.com/timedz.store?igsh=MW10Z2sxanBhMHZjdA%3D%3D&utm_source=qr"
+                href="https://www.instagram.com/centerstartagast?igsh=MXR4MTZ6ejZyeGdyag=="
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -162,12 +167,12 @@ export default function ContactPage() {
               </a>
             </Button>
             <Button variant="outline" asChild>
-              <a href="https://www.tiktok.com/@timedz2?_r=1&_t=ZS-96RoqmeBgLY" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.tiktok.com/@center.star.tagast?_r=1&_d=f30d4amgiaj9ll&sec_uid=MS4wLjABAAAAUIMaKYec89LdbTGS0SrO9XRS9lHusKyVpEE7jPyKHA5JHGpgQjDYstfzV-lzziJI&share_author_id=6862817392763814917&sharer_language=fr&source=h5_m&u_code=de3ga8fk679lfe&timestamp=1781278817&user_id=6862817392763814917&sec_user_id=MS4wLjABAAAAUIMaKYec89LdbTGS0SrO9XRS9lHusKyVpEE7jPyKHA5JHGpgQjDYstfzV-lzziJI&item_author_type=1&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7649350690394113812&share_link_id=540adc62-0dd6-4194-a01e-1b6303a8fd9d&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb7360&social_share_type=5&enable_checksum=1" target="_blank" rel="noopener noreferrer">
                 TikTok
               </a>
             </Button>
             <Button variant="outline" asChild>
-              <a href="https://wa.me/+213773232941" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/+213665048755" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-4 h-4 mr-2" />
                 WhatsApp
               </a>

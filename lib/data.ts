@@ -1,6 +1,20 @@
 import { getSupabaseServerClient } from "./supabase/server"
 import type { Product, Category, Brand, Wilaya, PaginatedResponse, FilterOptions } from "./types"
 
+// Normalize image URL: if it's already absolute or root-relative, keep it.
+// Otherwise assume it's a storage path and prefix with the Supabase public storage URL.
+function normalizeImageUrl(url: string | null | undefined) {
+  if (!url) return url || ""
+  const s = String(url)
+  // If data URI or blob URL, return as-is (these are already valid image sources)
+  if (/^(data:|blob:)/i.test(s)) return s
+  // Absolute URLs or root-relative paths should be returned unchanged
+  if (/^https?:\/\//i.test(s) || s.startsWith("//") || s.startsWith("/")) return s
+  const base = (process.env.NEXT_PUBLIC_SUPABASE_URL || "").replace(/\/$/, "")
+  if (!base) return s
+  return `${base}/storage/v1/object/public/${s.replace(/^\/+/, "")}`
+}
+
 // Helper to transform DB product to frontend Product type
 function transformProduct(dbProduct: any): Product {
   return {
@@ -12,7 +26,7 @@ function transformProduct(dbProduct: any): Product {
     price: dbProduct.price,
     originalPrice: dbProduct.original_price,
     discount: dbProduct.discount,
-    images: dbProduct.product_images?.map((img: any) => img.url) || [],
+    images: dbProduct.product_images?.map((img: any) => normalizeImageUrl(img.url)) || [],
     categoryId: dbProduct.category_id,
     categoryName: dbProduct.categories?.name || "",
     brandId: dbProduct.brand_id,
@@ -72,6 +86,13 @@ export async function getProducts(
   )
 
   // Apply filters
+  // Full-text / simple search (search in name and description)
+  if (options?.q) {
+    const q = String(options.q).trim()
+    if (q.length) {
+      query = query.or(`name.ilike.%${q}%,description.ilike.%${q}%`)
+    }
+  }
   if (options?.categories?.length) {
     query = query.in("category_id", options.categories)
   }
@@ -133,6 +154,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   // Normalize slug
   const normalizedSlug = slug.toLowerCase().trim()
 
+  // Try exact (case-insensitive) match first using ILIKE
   const { data, error } = await supabase
     .from("products")
     .select(`
@@ -141,17 +163,58 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       brands(name),
       product_images(url, alt, position)
     `)
-    .eq("slug", normalizedSlug)
-    .single()
+    .ilike("slug", normalizedSlug)
+    .maybeSingle()
 
   if (error) {
-    console.error("Error fetching product by slug:", error, "slug:", normalizedSlug)
+    const msg = error.message || JSON.stringify(error)
+    const status = (error as any).status || (error as any).code || "unknown"
+    console.error(`Error fetching product by slug: ${msg} (status: ${status}) slug: ${normalizedSlug}`)
     return null
   }
 
+  // If not found, try a relaxed wildcard search (take first match)
   if (!data) {
+    try {
+      const { data: fallbackData, error: fallbackError } = await supabase
+        .from("products")
+        .select(`
+          *,
+          categories(name),
+          brands(name),
+          product_images(url, alt, position)
+        `)
+        .ilike("slug", `%${normalizedSlug}%`)
+        .limit(1)
+
+      if (fallbackError) {
+        console.error("Fallback product search error:", fallbackError)
+        return null
+      }
+
+      if (fallbackData && fallbackData.length > 0) {
+        return transformProduct(fallbackData[0])
+      }
+    } catch (e) {
+      console.error("Error during fallback product search:", e)
+      return null
+    }
+
     console.log("No product found for slug:", normalizedSlug)
     return null
+  }
+
+  // Debug: log raw product_images from DB and normalized URLs to help diagnose missing images
+  try {
+    // eslint-disable-next-line no-console
+    console.log(`Product images from DB for slug: ${normalizedSlug}`, data.product_images)
+    // eslint-disable-next-line no-console
+    console.log(
+      `Normalized image URLs for slug: ${normalizedSlug}`,
+      data.product_images?.map((img: any) => normalizeImageUrl(img.url)) || [],
+    )
+  } catch (e) {
+    // ignore logging errors
   }
 
   return transformProduct(data)

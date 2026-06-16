@@ -5,7 +5,7 @@ import Image from "next/image"
 import { ArrowRight, Zap, Shield, Clock, Crown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/product/product-card"
-import { MainCategoryCard } from "@/components/category/main-category-card"
+import { CategoriesShowcase } from "@/components/home/categories-showcase"
 import { BrandCard } from "@/components/brand/brand-card"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 import { HeroCarousel } from "@/components/layout/hero-carousel"
@@ -42,10 +42,10 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
                   </div>
                 </div>
                 <h3 className="text-sm sm:text-base md:text-lg font-bold text-black-800 mb-1 sm:mb-2 tracking-tight">
-                  {t("home.authentic_products") || "Authentic Timepieces"}
+                  {t("home.authentic_products") || "Genuine Professional Tools"}
                 </h3>
                 <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
-                  {t("home.authentic_guarantee") || "Verified luxury watches from authorized dealers"}
+                  {t("home.authentic_guarantee") || "Pro-grade equipment verified for durability"}
                 </p>
               </div>
             </div>
@@ -60,10 +60,10 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
                   </div>
                 </div>
                 <h3 className="text-sm sm:text-base md:text-lg font-bold text-black-800 mb-1 sm:mb-2 tracking-tight">
-                  {t("home.fast_delivery") || "World-Class Delivery"}
+                  {t("home.fast_delivery") || "Fast, Reliable Shipping"}
                 </h3>
                 <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
-                  {t("home.delivery_time") || "Secure and swift shipping worldwide"}
+                  {t("home.delivery_time") || "Quick delivery and easy returns"}
                 </p>
               </div>
             </div>
@@ -78,10 +78,10 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
                   </div>
                 </div>
                 <h3 className="text-sm sm:text-base md:text-lg font-bold text-black-800 mb-1 sm:mb-2 tracking-tight">
-                  {t("home.expert_support") || "Expert Concierge"}
+                  {t("home.expert_support") || "Pro Support & Guidance"}
                 </h3>
                 <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
-                  {t("home.support_hours") || "Dedicated support for watch enthusiasts"}
+                  {t("home.support_hours") || "Product guidance for professionals and enthusiasts"}
                 </p>
               </div>
             </div>
@@ -96,10 +96,10 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
                   </div>
                 </div>
                 <h3 className="text-sm sm:text-base md:text-lg font-bold text-black-800 mb-1 sm:mb-2 tracking-tight">
-                  {t("home.best_prices") || "Best Prices"}
+                  {t("home.best_prices") || "Trusted Value"}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {t("home.guaranteed") || "Competitive pricing without compromise"}
+                  {t("home.guaranteed") || "Quality and value for salons and home users"}
                 </p>
               </div>
             </div>
@@ -107,36 +107,8 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
         </div>
       </section>
 
-      {/* Collections Section */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 md:mb-16 max-w-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-black-800 mb-4 tracking-tight">
-              {t("home.categories") || "Explore Collections"}
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {t("home.find_what_you_need") || "Discover curated collections of premium timepieces"}
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {categories.slice(0, 8).map((category, index) => (
-              <div key={category.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
-                <MainCategoryCard category={category} />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Button asChild size="lg" className="bg-black-800 hover:bg-black-700 text-white rounded-lg px-8 transition-all duration-300">
-              <Link href="/categories" className="inline-flex items-center gap-3">
-                {t("home.view_all") || "View All Collections"}
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* Premium Categories Showcase */}
+      <CategoriesShowcase />
 
       {/* Featured Timepieces - Premium Showcase */}
       <section className="py-20 md:py-28 bg-gradient-to-b from-silver-50/50 to-background">
@@ -144,10 +116,10 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
           <div className="mb-12 md:mb-16 max-w-2xl">
             <span className="text-sm font-semibold text-gold-500 tracking-widest uppercase">Curated Selection</span>
             <h2 className="text-4xl md:text-5xl font-bold text-black-800 mt-3 mb-4 tracking-tight">
-              {t("home.featured_products") || "Featured Timepieces"}
+              {t("home.featured_products") || "Featured Products"}
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              {t("home.bestsellers_and_new") || "Hand-picked watches from the world's most prestigious brands"}
+              {t("home.bestsellers_and_new") || "Hand-picked pro-grade tools and grooming essentials"}
             </p>
           </div>
 
@@ -161,8 +133,8 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
 
           <div className="mt-12 text-center">
             <Button asChild size="lg" className="bg-black-800 hover:bg-black-700 text-white rounded-lg px-8 transition-all duration-300">
-              <Link href="/products" className="inline-flex items-center gap-3">
-                {t("home.see_more") || "Explore All Watches"}
+                <Link href="/products" className="inline-flex items-center gap-3">
+                {t("home.see_more") || "Explore All Products"}
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
@@ -174,12 +146,12 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-12 md:mb-16 max-w-2xl">
-            <span className="text-sm font-semibold text-gold-500 tracking-widest uppercase">Global Heritage</span>
+            <span className="text-sm font-semibold text-gold-500 tracking-widest uppercase">Professional Brands</span>
             <h2 className="text-4xl md:text-5xl font-bold text-black-800 mt-3 mb-4 tracking-tight">
-              {t("home.popular_brands") || "Prestigious Brands"}
+              {t("home.popular_brands") || "Professional Brands"}
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              {t("home.trusted_brands") || "Authorized partner of the world's most luxurious watchmakers"}
+              {t("home.trusted_brands") || "Brands trusted by salons and barbers worldwide"}
             </p>
           </div>
 
@@ -209,7 +181,7 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
+            <div className="max-w-3xl mx-auto text-center">
             <div className="mb-6 inline-block">
               <span className="inline-block px-4 py-1.5 bg-gold-500/20 text-gold-500 text-sm font-semibold rounded-full tracking-wider">
                 EXCLUSIVE ACCESS
@@ -217,11 +189,11 @@ export function HomeContent({ categories, brands, featuredProducts }: HomeConten
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-tight">
-              Join the Elite Circle
+              Join the Professional Circle
             </h2>
             
             <p className="text-lg text-silver-200 mb-8 leading-relaxed">
-              Receive early access to limited editions, exclusive previews, and VIP collector insights
+              Receive product tips, how-to tutorials, and trade offers tailored for professionals
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
