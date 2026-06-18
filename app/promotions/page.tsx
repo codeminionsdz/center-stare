@@ -87,13 +87,6 @@ export default function PromotionsPage() {
     setSupabase(createClient(supabaseUrl, supabaseAnonKey))
   }, [])
 
-  useEffect(() => {
-    if (!supabase) return
-
-    fetchSettings()
-    fetchPromotions()
-  }, [supabase])
-
   const fetchSettings = async () => {
     try {
       if (!supabase) return
@@ -127,6 +120,13 @@ export default function PromotionsPage() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (!supabase) return
+
+    fetchSettings()
+    fetchPromotions()
+  }, [supabase])
 
   return (
     <div className="container mx-auto px-4 py-8">
