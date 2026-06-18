@@ -18,15 +18,22 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const supabase =
+    supabaseUrl && supabaseAnonKey
+      ? createBrowserClient(supabaseUrl, supabaseAnonKey)
+      : null
 
   // Load wishlist from database on mount
   useEffect(() => {
     const loadWishlist = async () => {
       try {
+        if (!supabase) {
+          setIsLoading(false)
+          return
+        }
+
         const {
           data: { user },
         } = await supabase.auth.getUser()
@@ -103,6 +110,10 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   const addItem = async (product: Product) => {
     try {
+      if (!supabase) {
+        throw new Error("Supabase is not configured")
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser()
@@ -145,6 +156,10 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   const removeItem = async (productId: string) => {
     try {
+      if (!supabase) {
+        throw new Error("Supabase is not configured")
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser()

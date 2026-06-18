@@ -3,6 +3,8 @@ import Link from "next/link"
 import FilterBar from "@/components/products/FilterBar"
 import { getProducts } from "@/lib/data"
 
+export const dynamic = "force-dynamic"
+
 export default async function Page({ searchParams }: { searchParams?: { [key: string]: string | string[] } }) {
   try {
     // `searchParams` may be a Promise in some Next versions/environments — unwrap it safely
