@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
 import { createClient } from "@supabase/supabase-js"
 
+export const dynamic = "force-dynamic"
+
 interface Settings {
   max_discount_percentage: number
   show_promotions_banner: boolean
@@ -67,21 +69,35 @@ const promotionCategories = [
 
 export default function PromotionsPage() {
   const breadcrumbItems = [{ label: "Promotions" }]
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-  )
   const [settings, setSettings] = useState<Settings | null>(null)
   const [promotions, setPromotions] = useState<Promotion[]>([])
   const [loading, setLoading] = useState(true)
+  const [supabase, setSupabase] = useState<ReturnType<typeof createClient> | null>(null)
 
   useEffect(() => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.warn("Supabase environment variables are missing on /promotions")
+      setLoading(false)
+      return
+    }
+
+    setSupabase(createClient(supabaseUrl, supabaseAnonKey))
+  }, [])
+
+  useEffect(() => {
+    if (!supabase) return
+
     fetchSettings()
     fetchPromotions()
-  }, [])
+  }, [supabase])
 
   const fetchSettings = async () => {
     try {
+      if (!supabase) return
+
       const response = await fetch("/api/admin/settings")
       const data = await response.json()
       if (data.success) {
@@ -94,6 +110,8 @@ export default function PromotionsPage() {
 
   const fetchPromotions = async () => {
     try {
+      if (!supabase) return
+
       setLoading(true)
       const { data, error } = await supabase
         .from("promotions")
