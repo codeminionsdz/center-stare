@@ -50,12 +50,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
   return (
     <article
       className={cn(
-        "group relative bg-white rounded-xl overflow-hidden transition-all duration-500 border border-border hover:border-gold-500/30 hover:shadow-2xl",
+        "group relative overflow-hidden rounded-2xl border border-border/80 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-gold-500/30 hover:shadow-[0_18px_50px_rgba(0,0,0,0.08)]",
         className,
       )}
     >
       {/* Image Container */}
-      <Link href={`/products/${product.slug}`} className="block relative aspect-square overflow-hidden bg-silver-50">
+      <Link href={`/products/${product.slug}`} className="block relative aspect-[1/1] overflow-hidden bg-gradient-to-br from-stone-50 to-silver-100">
         {/* Background gradient overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-br from-gold-500/0 to-gold-500/0 group-hover:from-gold-500/5 group-hover:to-gold-500/10 transition-all duration-500 z-10 pointer-events-none" />
         
@@ -76,20 +76,20 @@ export function ProductCard({ product, className }: ProductCardProps) {
         />
 
         {/* Premium Badges */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2 z-20">
+        <div className="absolute top-4 left-4 mt-auto flex flex-col gap-2 z-20">
           {hasDiscount && (
-            <Badge className="bg-gradient-to-r from-gold-500 to-gold-600 text-black-800 font-bold px-3 py-1 rounded-full shadow-lg">
+            <Badge className="bg-gradient-to-r from-gold-500 to-gold-600 text-black-800 font-bold px-3 py-1 rounded-full shadow-lg backdrop-blur-sm">
               <ScissorsIcon className="h-3 w-3 mr-1 text-black-800" />
               -{discountPercentage}%
             </Badge>
           )}
           {product.stock === 0 && (
-            <Badge variant="secondary" className="bg-black-800 text-white px-3 py-1 rounded-full">
+            <Badge variant="secondary" className="rounded-full bg-black-800 px-3 py-1 text-white">
               Sold Out
             </Badge>
           )}
           {product.featured && (
-            <Badge className="bg-gradient-to-r from-black-800 to-black-900 text-gold-500 px-3 py-1 rounded-full font-semibold">
+            <Badge className="rounded-full bg-black-900 px-3 py-1 font-semibold text-gold-500 shadow-lg">
               ✦ Featured
             </Badge>
           )}
@@ -99,7 +99,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/90 hover:bg-white text-black-800 rounded-full shadow-lg z-20"
+          className="absolute right-4 top-4 z-20 rounded-full bg-white/95 text-black-800 opacity-0 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 hover:bg-white"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -111,7 +111,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
       </Link>
 
       {/* Content Section */}
-      <div className="p-5 md:p-6 flex flex-col h-full">
+      <div className="flex h-full flex-col p-5 md:p-6">
         {/* Brand - Premium Style */}
         <Link
           href={`/brands/${product.brandId}`}
@@ -122,7 +122,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
         </Link>
 
         {/* Product Name - Elegant */}
-        <h3 className="mt-3 font-bold text-black-800 line-clamp-2 min-h-[2.8rem] leading-snug">
+        <h3 className="mt-3 min-h-[3.2rem] font-heading text-xl font-bold leading-tight text-black-800 line-clamp-2">
           <Link href={`/products/${product.slug}`} className="hover:text-gold-600 transition-colors duration-300">
             {product.name}
           </Link>
@@ -150,7 +150,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <div className="flex-grow" />
 
         {/* Price - Premium Display */}
-        <div className="mt-4 mb-4">
+        <div className="mb-4 mt-5 rounded-2xl bg-gradient-to-r from-stone-50 to-white p-3">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-black-800 tracking-tight">{formatPrice(product.price)}</span>
             {hasDiscount && (
@@ -162,13 +162,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col gap-2">
+        <div className="mt-auto flex flex-col gap-2">
           <Button
             className={cn(
-              "w-full py-3 rounded-lg font-semibold transition-all duration-300 text-sm tracking-wide",
+              "w-full rounded-xl py-3 font-semibold text-sm tracking-wide transition-all duration-300",
               product.stock === 0
                 ? "bg-silver-200 text-muted-foreground cursor-not-allowed"
-                : "bg-black-800 hover:bg-black-700 text-white hover:shadow-lg hover:shadow-gold-500/20"
+                : "bg-black-800 text-white hover:bg-black-700 hover:shadow-lg hover:shadow-gold-500/20"
             )}
             onClick={handleAddToCart}
             disabled={product.stock === 0}
@@ -179,7 +179,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           
           {product.stock > 0 && (
             <Button
-              className="w-full py-3 rounded-lg font-semibold transition-all duration-300 text-sm tracking-wide bg-gold-600 hover:bg-gold-700 text-black hover:shadow-lg hover:shadow-gold-500/30"
+              className="w-full rounded-xl py-3 font-semibold text-sm tracking-wide transition-all duration-300 bg-gold-600 hover:bg-gold-700 text-black hover:shadow-lg hover:shadow-gold-500/30"
               onClick={handleBuyNow}
             >
               <ScissorsIcon className="h-4 w-4 mr-2 text-black-800" />
