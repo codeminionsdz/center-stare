@@ -1,35 +1,10 @@
-import { createServerClient } from "@supabase/ssr"
-import { createClient } from "@supabase/supabase-js"
-import { cookies } from "next/headers"
+import { getSupabaseServerClient, getSupabaseAdminClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
 
 export async function GET() {
   try {
-    const cookieStore = await cookies()
-
-    // Create SSR client (respects RLS)
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options)
-            })
-          },
-        },
-      }
-    )
-
-    // Create admin client (bypasses RLS)
-    const adminClient = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
+    const supabase = await getSupabaseServerClient()
+    const adminClient = await getSupabaseAdminClient()
 
     // Get authenticated user
     const { data: { user }, error: userError } = await supabase.auth.getUser()

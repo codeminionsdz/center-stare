@@ -90,7 +90,7 @@ export function CategoryCard({ category, index = 0 }: CategoryCardProps) {
   }, [])
 
   return (
-    <Link href={category.href}>
+    <Link href="/categories">
       <div
         ref={ref}
         role="link"

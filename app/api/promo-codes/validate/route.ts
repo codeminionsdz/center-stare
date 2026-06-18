@@ -1,5 +1,4 @@
-import { createServerClient } from "@supabase/ssr"
-import { cookies } from "next/headers"
+import { getSupabaseServerClient } from "@/lib/supabase/server"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
@@ -10,28 +9,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: "Code and subtotal are required" }, { status: 400 })
     }
 
-    // Create Supabase client
-    const cookieStore = await cookies()
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll(cookiesToSet) {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options))
-            } catch {
-              // The `setAll` method was called from a Server Component.
-              // This can be ignored if you have middleware refreshing
-              // user sessions.
-            }
-          },
-        },
-      }
-    )
+    const supabase = await getSupabaseServerClient()
 
     // Check if promo code exists and is valid
     const { data: promoCode, error } = await supabase

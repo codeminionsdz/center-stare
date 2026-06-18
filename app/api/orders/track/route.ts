@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server"
 import { getSupabaseAdminClient } from "@/lib/supabase/server"
-import { createServerClient } from "@supabase/ssr"
+import { getSupabaseServerClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   try {
@@ -55,20 +55,7 @@ export async function GET(request: NextRequest) {
     let userId: string | null = null
     
     try {
-      const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-          cookies: {
-            getAll() {
-              return request.cookies.getAll()
-            },
-            setAll(cookiesToSet) {
-              // No-op for GET requests
-            },
-          },
-        }
-      )
+        const supabase = await getSupabaseServerClient()
 
       const { data: { user }, error: authError } = await supabase.auth.getUser()
       
