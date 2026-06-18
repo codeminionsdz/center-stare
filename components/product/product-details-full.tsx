@@ -183,18 +183,63 @@ export function ProductDetails({ product }: ProductDetailsProps) {
             </div>
           )}
 
+          <div className="hidden lg:block mt-6 rounded-3xl border border-border bg-white/80 p-6 shadow-sm">
+            <div className="flex flex-wrap items-start justify-between gap-6">
+              <div className="min-w-0 max-w-3xl">
+                <div className="mb-3 inline-flex items-center rounded-full bg-gold-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-gold-700">
+                  Featured Product
+                </div>
+                <div className="mb-2 text-sm font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                  {product.brandName || "CENTER STARE"}
+                </div>
+                <h1 className="text-4xl xl:text-5xl font-heading font-bold tracking-tight text-foreground leading-[0.95] text-balance">
+                  {product.name}
+                </h1>
+              </div>
+
+              <div className="shrink-0 rounded-2xl bg-background/80 px-5 py-4 text-right shadow-sm">
+                <div className="text-xs font-medium uppercase tracking-[0.22em] text-muted-foreground">Price</div>
+                <div className="mt-1 text-4xl font-bold tracking-tight text-foreground">
+                  {formatPrice(product.price)}
+                </div>
+                {product.originalPrice && product.originalPrice > product.price && (
+                  <div className="mt-1 text-sm text-muted-foreground line-through">
+                    {formatPrice(product.originalPrice)}
+                  </div>
+                )}
+                <div className="mt-2 text-sm text-green-600">
+                  {isInStock ? "In stock" : "Out of stock"}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Mobile condensed title + CTA (always visible on small screens) */}
           <div className="lg:hidden mt-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-lg font-bold text-foreground leading-tight">{product.name}</h1>
-                <div className="text-sm text-muted-foreground mt-1">{product.brandName ?? ""}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-lg font-bold">{formatPrice(product.price)}</div>
-                {product.originalPrice && product.originalPrice > product.price && (
-                  <div className="text-xs text-muted-foreground line-through">{formatPrice(product.originalPrice)}</div>
-                )}
+            <div className="rounded-2xl border border-border/80 bg-gradient-to-br from-white via-white to-stone-50 p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <div className="mb-2 inline-flex items-center rounded-full bg-gold-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-700">
+                    Product
+                  </div>
+                  <h1 className="text-2xl font-heading font-bold tracking-tight text-foreground leading-tight break-words">
+                    {product.name}
+                  </h1>
+                  <div className="mt-2 text-sm text-muted-foreground">
+                    {product.brandName ?? ""}
+                  </div>
+                </div>
+                <div className="shrink-0 text-right">
+                  <div className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">Price</div>
+                  <div className="text-2xl font-bold leading-none text-foreground">
+                    {formatPrice(product.price)}
+                  </div>
+                  {product.originalPrice && product.originalPrice > product.price && (
+                    <div className="mt-1 text-xs text-muted-foreground line-through">
+                      {formatPrice(product.originalPrice)}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -224,10 +269,10 @@ export function ProductDetails({ product }: ProductDetailsProps) {
               </div>
 
               <div className="mt-3 grid gap-3">
-                <button onClick={onBuyNow} disabled={!isInStock} className="w-full bg-gold-500 text-black py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
+                <button onClick={onBuyNow} disabled={!isInStock} className="w-full rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 py-3.5 font-semibold text-black shadow-sm transition-transform active:scale-[0.99] flex items-center justify-center gap-2">
                   <ShoppingCart className="h-4 w-4" /> اشتري الآن
                 </button>
-                <button onClick={onBuyNow} disabled={!isInStock} className="w-full bg-primary text-white py-3 rounded-lg font-semibold">
+                <button onClick={onBuyNow} disabled={!isInStock} className="w-full rounded-xl bg-black py-3.5 font-semibold text-white shadow-sm transition-transform active:scale-[0.99]">
                   اشتري الآن
                 </button>
               </div>
@@ -268,22 +313,22 @@ export function ProductDetails({ product }: ProductDetailsProps) {
 
         {/* Sticky panel / actions */}
         <aside className="lg:col-span-1">
-          <div className="sticky top-24 rounded-2xl border border-border bg-white p-6 shadow-md">
+          <div className="sticky top-24 rounded-3xl border border-border/80 bg-gradient-to-b from-white to-stone-50 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-muted-foreground">السعر</div>
                 <div className="text-2xl font-bold">{formatPrice(product.price)}</div>
               </div>
-              <button onClick={toggleWishlist} className="inline-flex items-center justify-center p-2 rounded-md border border-border">
+              <button onClick={toggleWishlist} className="inline-flex items-center justify-center rounded-full border border-border bg-white p-3 shadow-sm transition-transform active:scale-95">
                 <Heart className="h-5 w-5" />
               </button>
             </div>
 
             <div className="mt-4 flex items-center gap-3">
-              <button aria-label="Decrease" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="h-10 w-10 grid place-items-center rounded-full border">
+              <button aria-label="Decrease" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="h-11 w-11 grid place-items-center rounded-full border border-border bg-white shadow-sm transition-colors hover:bg-muted">
                 <Minus className="h-4 w-4" />
               </button>
-              <div className="text-lg font-medium">{quantity}</div>
+              <div className="min-w-12 text-center text-lg font-semibold">{quantity}</div>
               <button aria-label="Increase" onClick={() => setQuantity(Math.min(product.stock ?? 999, quantity + 1))} className="h-10 w-10 grid place-items-center rounded-full border">
                 <Plus className="h-4 w-4" />
               </button>

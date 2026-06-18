@@ -50,7 +50,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </Link>
             </li>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            <li className="text-foreground font-medium truncate max-w-[200px]">{product.name}</li>
+            <li className="text-foreground font-medium truncate max-w-[320px] md:max-w-[520px] lg:max-w-[700px]">
+              {product.name}
+            </li>
           </ol>
         </div>
       </nav>
